@@ -1,0 +1,14 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{title}} - 1db</title>
+    {% else %}
+    <title>1db</title>
+    {% endif %}
+  </head>
+  <body>
+    <div>1db: <a href="/index">Home</a></div>
+    <hr>
+    {% block content %}{% endblock %}
+  </body>
+</html>
