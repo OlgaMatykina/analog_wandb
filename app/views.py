@@ -14,6 +14,8 @@ from urllib.parse import urlsplit
 
 from app.utils import get_project_names, get_runs, make_image
 
+import matplotlib.pyplot as plt
+
 
 @app.route('/')
 @app.route('/index')
@@ -23,6 +25,21 @@ def index():
     return render_template("index.html",
         title = 'Home',
         projects = projects)
+
+@app.route('/project/<project>', methods=['GET', 'POST'])
+@login_required
+def project(project):
+    runs = get_runs(db, current_user.username, project)
+    names = []
+    for run in runs:
+        names.append(run.name)
+    if request.method == 'GET':
+        make_image(db, runs)
+        return render_template('project.html', runs=names, checked=names)
+    elif request.method == 'POST':
+        checked = request.form.getlist('hello')
+        # make_image(db, checked)
+        return render_template('project.html', runs=names, checked=names)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

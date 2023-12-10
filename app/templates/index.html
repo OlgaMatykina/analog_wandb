@@ -6,11 +6,8 @@
 
     <ul>
         {% for project in projects %}
-        
-        <div><p>{{ project }}</p></div>
+        <li> <a href={{ url_for("project", project=project) }}>{{ project }}</a></li>
         {% endfor %}
     </ul>
 
 {% endblock %}
-
-<!-- <li> <a href={{ url_for("project", project=project) }}>{{ project }}</a></li> -->
