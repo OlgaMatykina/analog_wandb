@@ -35,10 +35,18 @@ class Experiment(db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(140))
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc))
-    user_id: so.Mapped[str] = so.mapped_column(sa.ForeignKey(User.id),
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
                                                index=True)
 
     author: so.Mapped[User] = so.relationship('User', back_populates='experiments')
+
+class Metric(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    metric: so.Mapped[str] = so.mapped_column(sa.String(140))
+    value: so.Mapped[float] = so.mapped_column(sa.Float)
+
+    experiment_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(Experiment.id),
+                                               index=True)
 
     def __repr__(self):
         return '<Experiment {}>'.format(self.body)
