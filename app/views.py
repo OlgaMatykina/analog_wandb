@@ -12,24 +12,17 @@ from flask import url_for
 from flask import request
 from urllib.parse import urlsplit
 
+from app.utils import get_project_names, get_runs, make_image
+
 
 @app.route('/')
 @app.route('/index')
 @login_required
 def index():
-    experiments = [ # список выдуманных постов
-        { 
-            'author': { 'nickname': 'John' }, 
-            'name': 'Beautiful day in Portland!' 
-        },
-        { 
-            'author': { 'nickname': 'Susan' }, 
-            'name': 'The Avengers movie was so cool!' 
-        }
-    ]
+    projects = get_project_names(db, current_user.username)
     return render_template("index.html",
         title = 'Home',
-        experiments = experiments)
+        projects = projects)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

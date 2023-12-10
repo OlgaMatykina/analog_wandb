@@ -8,12 +8,13 @@ class Run():
     def __init__(self, username: str, project: str, name: str = None,) -> None:
         with app.app_context():
             user = db.first_or_404(sa.select(User).where(User.username == username))
-            experiment = Experiment(project=project, name=name, user_id = user.id)
             if name is None:
                 name = self._get_random_name()
+            experiment = Experiment(project=project, name=name, user_id = user.id)
             db.session.add(experiment)
             db.session.commit()
-            self.experiment = db.first_or_404(sa.select(Experiment).where(Experiment.name == name))
+            db.session.refresh(experiment)
+            self.experiment = experiment
 
     def log(self, values: dict):
         with app.app_context():

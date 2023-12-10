@@ -1,8 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+
     <h1>Hi, {{ current_user.username }}!</h1>
-    {% for experiment in experiments %}
-    <div><p>{{ experiment.author.username }} says: <b>{{ experiment.name }}</b></p></div>
-    {% endfor %}
+
+    <ul>
+        {% for project in projects %}
+        
+        <div><p>{{ project }}</p></div>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
+
+<!-- <li> <a href={{ url_for("project", project=project) }}>{{ project }}</a></li> -->
