@@ -10,12 +10,13 @@ from app import db
 from app.forms import RegistrationForm
 from flask import url_for
 from flask import request
+from urllib.parse import urlsplit
 
 
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
-    user = { 'nickname': 'Miguel' } # выдуманный пользователь
     experiments = [ # список выдуманных постов
         { 
             'author': { 'nickname': 'John' }, 
@@ -28,7 +29,6 @@ def index():
     ]
     return render_template("index.html",
         title = 'Home',
-        user = user,
         experiments = experiments)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -54,9 +54,9 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-@login_required
-def index():
-    return render_template("index.html", title='Home Page', experiments=experiments)
+# @login_required
+# def index():
+#     return render_template("index.html", title='Home Page', experiments=experiments)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -71,3 +71,13 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = db.first_or_404(sa.select(User).where(User.username == username))
+    experiments = [
+        {'author': user, 'name': 'Test post #1'},
+        {'author': user, 'name': 'Test post #2'}
+    ]
+    return render_template('user.html', user=user, experiments=experiments)

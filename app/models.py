@@ -31,6 +31,7 @@ class User(UserMixin, db.Model):
 
 class Experiment(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    project: so.Mapped[str] = so.mapped_column(sa.String(140))
     name: so.Mapped[str] = so.mapped_column(sa.String(140))
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc))
