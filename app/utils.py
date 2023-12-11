@@ -60,8 +60,8 @@ def make_image(db, runs):
                 values = logs[(run.id, metric)]
                 if values != []:
                     plt.plot(values, label=run.name, c=cmap_arr[j])
-                    # fig = px.scatter(x=range(10), y=range(10))
-                    # fig.write_html("graph.html")
+                    fig = px.scatter(x=range(10), y=range(10))
+                    fig.write_html("app/static/images/graph.html")
         plt.title(metric)
         plt.legend()
     plt.savefig("app/static/images/plots.png")

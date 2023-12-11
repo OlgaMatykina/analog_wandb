@@ -23,5 +23,5 @@ class Run():
                 db.session.add(metric)
                 db.session.commit()
 
-    def _get_random_name(name_len=10):
-        return ''.join(random.choices(string.ascii_uppercase + string.digits, k=name_len))
+    # def _get_random_name(name_len=10):
+    #     return ''.join(random.choices(string.ascii_uppercase + string.digits, k=name_len))

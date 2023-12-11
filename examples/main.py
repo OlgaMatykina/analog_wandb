@@ -2,8 +2,9 @@ import numpy as np
 from onedb.run import Run
 
 if __name__ == '__main__':
-    username='user1'
-    projects = ['project 1', 'proj', 'projector']
+    username='user2'
+    # projects = ['project 1', 'proj', 'projector']
+    projects = ['oneformer']
     logs = ['loss', 'accuracy', 'reward']
     for proj in projects:
         for i in range(np.random.choice(np.arange(4, 10))):
