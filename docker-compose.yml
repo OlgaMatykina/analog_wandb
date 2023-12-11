@@ -1,0 +1,15 @@
+version: '3'
+services:
+  web:
+    build: .
+    ports:
+     - "5000:5000"
+    volumes:
+     - .:/analog_wandb_docker
+    # networks:
+    #   - redis-net
+    command: python3 -m flask run --host=0.0.0.0
+
+networks:
+  redis-net:
+    external: true

@@ -16,7 +16,6 @@ from app.utils import get_project_names, get_runs, make_image
 
 import matplotlib.pyplot as plt
 
-
 @app.route('/')
 @app.route('/index')
 @login_required
