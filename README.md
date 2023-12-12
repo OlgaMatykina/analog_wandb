@@ -11,7 +11,7 @@ docker exec -it analog_wandb-web-1 /bin/bash -c "/bin/bash"
 ```
 и запустить код эксперимента
 ```
-python -m experiments.main
+python -m examples.main
 ```
 Фрагмент работы сервиса представлен в следующем видео.
 
