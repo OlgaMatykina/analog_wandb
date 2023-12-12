@@ -14,5 +14,6 @@ docker exec -it analog_wandb_docker-web-1 /bin/bash -c "/bin/bash"
 python -m experiments.main
 ```
 Фрагмент работы сервиса представлен в следующем видео.
-<video src='https://drive.google.com/file/d/1IkMDMsIZmJG_j1D0CrxvdLsp3jVf82VU/view?usp=sharing' width=180/>
+
+https://github.com/OlgaMatykina/analog_wandb/assets/89583270/18d3cb2a-39d1-4176-abe4-98fa3360a492
 
