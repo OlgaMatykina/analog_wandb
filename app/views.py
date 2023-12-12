@@ -37,8 +37,12 @@ def project(project):
         return render_template('project.html', runs=names, checked=names)
     elif request.method == 'POST':
         checked = request.form.getlist('hello')
-        # make_image(db, checked)
-        return render_template('project.html', runs=names, checked=names)
+        checked_runs = []
+        for run in runs:
+            if run.name in checked:
+                checked_runs.append(run)
+        make_image(db, checked_runs)
+        return render_template('project.html', runs=names, checked=checked)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
