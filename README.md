@@ -15,5 +15,5 @@ python -m experiments.main
 ```
 Фрагмент работы сервиса представлен в следующем видео.
 
-https://github.com/OlgaMatykina/analog_wandb/assets/89583270/18d3cb2a-39d1-4176-abe4-98fa3360a492
+![onedb_edited2 (1)](https://github.com/OlgaMatykina/analog_wandb/assets/89583270/3daf20c7-37c8-427a-8e2f-3c5a6424eca6)
 
