@@ -32,6 +32,21 @@ def make_image(db, runs):
         plt.savefig("app/static/images/plots.png")
         # fig = px.scatter(x=range(10), y=range(10))
         # fig.write_html("graph.html")
+        fig = go.Figure()
+        fig_json = fig.to_json()
+
+        template = """<div id='divPlotly'>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script>
+    var plotly_data = {}
+    Plotly.react('divPlotly', plotly_data.data, plotly_data.layout);
+</script>
+</div>"""
+
+        with open('app/static/images/new_plot.html', 'w') as f:
+            f.write(template.format(fig_json))
+        pass
+
         return
 
     logs = {}
@@ -46,10 +61,21 @@ def make_image(db, runs):
             # logs += a
     # logs = list(set(logs))
     nrows = (len(metrics) + 1) // 2
+    nrows_fig = len(metrics) + 1
     
     # plt.clf()
     cmap = plt.get_cmap('plasma')
     cmap_arr = cmap(np.linspace(0, 1, len(runs)))
+    titles = []
+    for metric in metrics:
+        titles.append(metric)
+    fig = make_subplots(rows=nrows_fig, subplot_titles=titles)
+    fig.update_layout(
+        autosize=False,
+        width=800,
+        height=500 * nrows_fig,
+        legend_tracegroupgap = 420
+    )
     plt.figure(figsize=(15, 5 * nrows))
     for i, metric in enumerate(metrics):
         plt.subplot(nrows, 2, i + 1)
@@ -59,13 +85,37 @@ def make_image(db, runs):
             if (run.id, metric) in logs.keys():
                 values = logs[(run.id, metric)]
                 if values != []:
+                    # x = [k for k in range(len(values))] #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]
+                    fig.add_trace(
+                        go.Scattergl(x=[k for k in range(len(values))], 
+                                     y=values, name=run.name,
+                                     legendgroup = str(i+1)), # lambda k: k in range(len(values))
+                        row=i+1, col=1
+                    )
                     plt.plot(values, label=run.name, c=cmap_arr[j])
-                    fig = px.scatter(x=range(10), y=range(10))
-                    fig.write_html("app/static/images/graph.html")
+                    # fig = px.scatter(x=range(10), y=range(10))
+                    # fig.write_html("app/static/images/graph.html")
         plt.title(metric)
         plt.legend()
     plt.savefig("app/static/images/plots.png")
-    # plt.show()
+    # create a simple plot
+    # bar = plotly.graph_objs.Bar(x=['giraffes', 'orangutans', 'monkeys'], 
+    #                             y=[20, 14, 23])
+    # layout = plotly.graph_objs.Layout()
+    # fig = plotly.graph_objs.Figure([bar], layout)
+    # convert it to JSON
+    fig_json = fig.to_json()
+
+    template = """<div id='divPlotly'>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        var plotly_data = {}
+        Plotly.react('divPlotly', plotly_data.data, plotly_data.layout);
+    </script>
+</div>"""
+
+    with open('app/static/images/new_plot.html', 'w') as f:
+        f.write(template.format(fig_json))
     pass
 
 # def _make_name(project, run = None, log = None):
